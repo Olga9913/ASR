@@ -1,0 +1,15 @@
+# постепенное затухание или нарастание звука
+train:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000
+  audio:
+    _target_: src.transforms.RandomApply
+    p: 1
+    augmentation:
+      _target_: src.transforms.wav_augs.Fading
+      alpha: 0.4
+inference:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000

@@ -1,0 +1,13 @@
+# преобразование изменяет громкость аудиофайла. Например, оно может увеличить или уменьшить громкость записи
+train:
+  get_spectrogram: # какая трансформация будет применяться к аудиофайлу на стадии обучения
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000
+  audio: # на какое аудио (тензор) будет применяться преобразование
+    _target_: torchvision.transforms.v2.Compose
+    transforms:
+      - _target_: src.transforms.wav_augs.Gain
+inference:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000

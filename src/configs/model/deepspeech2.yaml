@@ -1,0 +1,3 @@
+_target_: src.model.DeepSpeech2
+n_features: 128
+n_conv_layers: 2

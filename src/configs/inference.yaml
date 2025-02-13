@@ -1,0 +1,16 @@
+defaults:
+  - model: deepspeech2
+  - metrics: bs_lm_metrics
+  - datasets: inference # we do not want to run inference on training data
+  - dataloader: trainclean100
+  - transforms: inference
+  - _self_
+text_encoder:
+  _target_: src.text_encoder.CTCTextEncoder
+  use_lm: True
+inferencer:
+  device_tensors: ["spectrogram", "text_encoded"] # which tensors should be on device (ex. GPU)
+  device: auto # device name or "auto"
+  save_path: "inference" # any name here, can be a dataset name
+  seed: 1
+  from_pretrained: "data/models/model_best.pth" # path to the pretrained model

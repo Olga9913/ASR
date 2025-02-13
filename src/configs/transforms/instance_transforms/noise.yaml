@@ -1,0 +1,16 @@
+# добавление цветного шума помогает модели стать более устойчивой к реальному шуму (например, фоновым звукам)
+train:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000
+  audio:
+    _target_: src.transforms.RandomApply
+    p: 0.6
+    augmentation:
+      _target_: src.transforms.wav_augs.AddColoredNoise
+      p: 0.6
+      sample_rate: ${datasets.train.target_sr}
+inference:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000

@@ -1,0 +1,10 @@
+_target_: src.logger.WandBWriter
+project_name: "ASR_HW"
+entity: null
+run_name: "testing"
+mode: "online"
+loss_names: ["loss"] # which losses to log (useful for multi-loss tasks, s.a. GANs)
+log_checkpoints: True # set to True if you want to log save_dir with checkpoints to W&B
+id_length: 8 # length of the run_id
+api_key: ${oc.env:WANDB_API_KEY} # in terminal set up - export WANDB_API_KEY=ХХХХХХ, then check - echo $WANDB_API_KEY
+# api_key: ""

@@ -1,0 +1,17 @@
+# SpeedPerturb изменяет скорость аудиозаписи, растягивая или сжимая звук. Эта техника делает модель устойчивой к разной скорости речи говорящих 
+# (быстро, медленно, четко, смазано).
+train:
+  get_spectrogram: # special key for getting spectrogram
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000
+  audio: # name of the tensor on which we apply transform
+    _target_: src.transforms.RandomApply
+    p: 0.8
+    augmentation:
+      _target_: src.transforms.wav_augs.SpeedPerturb
+      orig_freq: ${datasets.train.target_sr}
+      factors: [2, 3, 0.5, 1.5]
+inference:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000

@@ -1,0 +1,27 @@
+# Фильтрация частот помогает модели стать устойчивой к потерям данных в узком диапазоне частот (например, из-за плохого микрофона или помех)
+train:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000
+  audio:
+    _target_: src.transforms.RandomApply
+    p: 0.8
+    augmentation:
+      _target_: torchvision.transforms.v2.RandomChoice
+      transforms:
+        - _target_: src.transforms.wav_augs.BandPassFilter
+          p: 1.0
+          min_bandwidth_fraction: 1.5
+          min_center_frequency: 2000
+          max_center_frequency: 2001
+          sample_rate: ${datasets.train.target_sr}
+        - _target_: src.transforms.wav_augs.BandStopFilter
+          p: 1.0
+          max_bandwidth_fraction: 1.5
+          min_center_frequency: 2000
+          max_center_frequency: 2001
+          sample_rate: ${datasets.train.target_sr}
+inference:
+  get_spectrogram:
+    _target_: torchaudio.transforms.MelSpectrogram
+    sample_rate: 16000

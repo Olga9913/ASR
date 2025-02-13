@@ -1,0 +1,15 @@
+train:
+  _target_: src.datasets.LibrispeechDataset
+  part: "train_all"
+  instance_transforms: ${transforms.instance_transforms.train}
+  target_sr: 16000
+val:
+  _target_: src.datasets.LibrispeechDataset
+  part: "dev-other"
+  instance_transforms: ${transforms.instance_transforms.inference}
+  target_sr: 16000
+test:
+  _target_: src.datasets.LibrispeechDataset
+  part: "test-other"
+  instance_transforms: ${transforms.instance_transforms.inference}
+  target_sr: 16000
